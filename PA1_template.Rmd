@@ -8,11 +8,18 @@ output:
 
 ## Loading and preprocessing the data
 
-
+```{r}
+##set working directory
+setwd("/Users/hgmoen/Documents/Data Science/5-Reproducible_Research")
+act<-read.csv("activity.csv")
+```
 
 ## What is mean total number of steps taken per day?
 
-
+```{r}
+steps_sum<-aggregate(act$steps, by=list(act$date), sum, na.rm=TRUE)
+hist(steps_sum$x, main="Histogram of Steps per Day", xlab="Steps per Day")
+```
 
 ## What is the average daily activity pattern?
 
