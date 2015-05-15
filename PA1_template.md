@@ -31,7 +31,7 @@ print(sum, type="html")
 ```
 
 <!-- html table generated in R 3.1.2 by xtable 1.7-4 package -->
-<!-- Fri May 15 08:47:32 2015 -->
+<!-- Fri May 15 08:49:27 2015 -->
 <table border=1>
 <tr> <th>  </th> <th> Date </th> <th> Steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-02 </td> <td align="right"> 126 </td> </tr>

@@ -114,6 +114,4 @@ colnames(mean_int_wd)<-c("interval", "weekday", "average_steps")
 mean_int_wd$weekday<-gsub("TRUE", "weekday", mean_int_wd$weekday)
 mean_int_wd$weekday<-gsub("FALSE", "weekend", mean_int_wd$weekday)
 xyplot(average_steps~interval|weekday, data=mean_int_wd, type="l", panel="panel.lines", layout=c(1,2), main="Time Series Plot of Average Steps Over 5-min Interval", xlab="Interval (5 min)", ylab="Average Steps")
-
-
 ```
