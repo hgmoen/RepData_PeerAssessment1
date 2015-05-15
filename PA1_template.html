@@ -82,7 +82,7 @@ library(xtable)
 sum&lt;-xtable(steps_sum)
 print(sum, type=&quot;html&quot;)</code></pre>
 <!-- html table generated in R 3.1.2 by xtable 1.7-4 package -->
-<!-- Fri May 15 08:52:52 2015 -->
+<!-- Fri May 15 08:55:01 2015 -->
 <table border="1">
 <tr> <th>  </th> <th> 
 Date
@@ -513,7 +513,8 @@ maxint&lt;-mean_int[maxrow,]$interval</code></pre>
 na&lt;-which(is.na(act_all)==TRUE)
 act_replace&lt;-act_all
 for (i in na) {
-        act_replace[i, &quot;steps&quot;]&lt;-mean_int[which(mean_int$interval==act_replace[i,&quot;interval&quot;]),&quot;average_steps&quot;]
+        act_replace[i, &quot;steps&quot;]&lt;-mean_int[which(mean_int$interval==
+        act_replace[i,&quot;interval&quot;]),&quot;average_steps&quot;]
         }</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</li>

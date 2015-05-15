@@ -82,7 +82,8 @@ The number of missing values in the data set is: `r nas`
 na<-which(is.na(act_all)==TRUE)
 act_replace<-act_all
 for (i in na) {
-        act_replace[i, "steps"]<-mean_int[which(mean_int$interval==act_replace[i,"interval"]),"average_steps"]
+        act_replace[i, "steps"]<-mean_int[which(mean_int$interval==
+        act_replace[i,"interval"]),"average_steps"]
         }
 ```
 
