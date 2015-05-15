@@ -31,7 +31,7 @@ print(sum, type="html")
 ```
 
 <!-- html table generated in R 3.1.2 by xtable 1.7-4 package -->
-<!-- Fri May 15 08:49:27 2015 -->
+<!-- Fri May 15 09:07:15 2015 -->
 <table border=1>
 <tr> <th>  </th> <th> Date </th> <th> Steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-02 </td> <td align="right"> 126 </td> </tr>
@@ -92,7 +92,9 @@ print(sum, type="html")
 2. Make a histogram of the total number of steps taken each day
 
 ```r
-hist(steps_sum$Steps, labels=TRUE, ylim=c(0,45), main="Histogram of Steps per Day (without NAs)", xlab="Steps per Day")
+hist(steps_sum$Steps, labels=TRUE, ylim=c(0,45), 
+     main="Histogram of Steps per Day (without NAs)", 
+     xlab="Steps per Day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
@@ -116,7 +118,9 @@ Median of total number of steps taken per day: 10765
 library("lattice")
 mean_int<-aggregate(act$steps, by=list(act$interval), mean, na.rm=TRUE)
 colnames(mean_int)<-c("interval", "average_steps")
-xyplot(average_steps~interval, data=mean_int, type="l", main="Time Series Plot of Average Steps Over 5-min Interval", xlab="Interval (5 min)", ylab="Average Steps")
+xyplot(average_steps~interval, data=mean_int, type="l", 
+       main="Time Series Plot of Average Steps Over 5-min Interval", 
+       xlab="Interval (5 min)", ylab="Average Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
@@ -145,8 +149,9 @@ The number of missing values in the data set is: 2304
 na<-which(is.na(act_all)==TRUE)
 act_replace<-act_all
 for (i in na) {
-        act_replace[i, "steps"]<-mean_int[which(mean_int$interval==act_replace[i,"interval"]),"average_steps"]
-}
+        act_replace[i, "steps"]<-mean_int[which(mean_int$interval==
+        act_replace[i,"interval"]),"average_steps"]
+        }
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -155,16 +160,20 @@ for (i in na) {
 ```r
 new_steps_sum<-aggregate(act_replace$steps, by=list(act_replace$date), sum, na.rm=TRUE)
 colnames(new_steps_sum)<-c("Date", "Steps")
-hist(new_steps_sum$Steps, labels=TRUE, ylim=c(0,45), main="Histogram of Steps per Day (with NAs filled in)", xlab="Steps per Day")
+hist(new_steps_sum$Steps, labels=TRUE, ylim=c(0,45), 
+     main="Histogram of Steps per Day (with NAs filled in)", 
+     xlab="Steps per Day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 
 ```r
-new_steps_mean<-aggregate(new_steps_sum$Steps, by=list(new_steps_sum$Date), mean, na.rm=TRUE)
+new_steps_mean<-aggregate(new_steps_sum$Steps, 
+                          by=list(new_steps_sum$Date), mean, na.rm=TRUE)
 options(scipen=999)
 new_mean<-mean(new_steps_mean$x)
-new_steps_med<-aggregate(new_steps_sum$Steps, by=list(new_steps_sum$Date), median, na.rm=TRUE)
+new_steps_med<-aggregate(new_steps_sum$Steps, 
+                         by=list(new_steps_sum$Date), median, na.rm=TRUE)
 new_med<-median(new_steps_med$x)
 ```
 Mean:10766.1886792  
@@ -200,7 +209,10 @@ mean_int_wd<-aggregate(act_wd$steps, list(act_wd$interval, act_wd$weekday), mean
 colnames(mean_int_wd)<-c("interval", "weekday", "average_steps")
 mean_int_wd$weekday<-gsub("TRUE", "weekday", mean_int_wd$weekday)
 mean_int_wd$weekday<-gsub("FALSE", "weekend", mean_int_wd$weekday)
-xyplot(average_steps~interval|weekday, data=mean_int_wd, type="l", panel="panel.lines", layout=c(1,2), main="Time Series Plot of Average Steps Over 5-min Interval", xlab="Interval (5 min)", ylab="Average Steps")
+xyplot(average_steps~interval|weekday, data=mean_int_wd, type="l", 
+       panel="panel.lines", layout=c(1,2), 
+       main="Time Series Plot of Average Steps Over 5-min Interval", 
+       xlab="Interval (5 min)", ylab="Average Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
