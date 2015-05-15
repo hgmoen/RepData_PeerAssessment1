@@ -16,6 +16,7 @@ act_all<-read.csv("activity.csv")
 ```r
 ##remove NAs
 act<-na.omit(act_all)
+act_all$date<-as.Date(act_all$date)
 ```
 
 ## What is mean total number of steps taken per day?
@@ -30,7 +31,7 @@ print(sum, type="html")
 ```
 
 <!-- html table generated in R 3.1.2 by xtable 1.7-4 package -->
-<!-- Thu May 14 22:23:50 2015 -->
+<!-- Fri May 15 08:47:32 2015 -->
 <table border=1>
 <tr> <th>  </th> <th> Date </th> <th> Steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-02 </td> <td align="right"> 126 </td> </tr>
@@ -154,7 +155,6 @@ for (i in na) {
 ```r
 new_steps_sum<-aggregate(act_replace$steps, by=list(act_replace$date), sum, na.rm=TRUE)
 colnames(new_steps_sum)<-c("Date", "Steps")
-new_sum<-xtable(new_steps_sum)
 hist(new_steps_sum$Steps, labels=TRUE, ylim=c(0,45), main="Histogram of Steps per Day (with NAs filled in)", xlab="Steps per Day")
 ```
 
@@ -167,7 +167,40 @@ new_mean<-mean(new_steps_mean$x)
 new_steps_med<-aggregate(new_steps_sum$Steps, by=list(new_steps_sum$Date), median, na.rm=TRUE)
 new_med<-median(new_steps_med$x)
 ```
-Mean:10766.1886792
-Median:10766.1886792
-The values differ from the estimates in the first part of the assignment. Inputing missing data increases the number of days where steps were between 10000 and 15000 by 8, from 28 to 36. Because the other histogram bars remained the same, this would suggest that there were 8 days where all step values were "NA."
-## Are there differences in activity patterns between weekdays and weekends?
+Mean:10766.1886792  
+Median:10766.1886792  
+
+The values differ from the estimates in the first part of the assignment. Inputing missing data increases the number of days where steps were between 10000 and 15000 by 8, from 28 to 36. Because the other histogram bars remained the same, this would suggest that there were 8 days where all step values were NA. There was not a significant change in the mean and median between the two data sets, but the second set where the NAs were filled in resulted in the same value for the mean and median. The first part of the assignment, the mean and median were off by about 1. 
+
+## Are there differences in activity patterns between weekdays and weekends?  
+1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.  
+
+```r
+library(timeDate)
+```
+
+```
+## 
+## Attaching package: 'timeDate'
+## 
+## The following object is masked from 'package:xtable':
+## 
+##     align
+```
+
+```r
+act_wd<-act_replace
+wd<-isWeekday(act_wd$date)
+act_wd$weekday<-wd
+```
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+```r
+mean_int_wd<-aggregate(act_wd$steps, list(act_wd$interval, act_wd$weekday), mean)
+colnames(mean_int_wd)<-c("interval", "weekday", "average_steps")
+mean_int_wd$weekday<-gsub("TRUE", "weekday", mean_int_wd$weekday)
+mean_int_wd$weekday<-gsub("FALSE", "weekend", mean_int_wd$weekday)
+xyplot(average_steps~interval|weekday, data=mean_int_wd, type="l", panel="panel.lines", layout=c(1,2), main="Time Series Plot of Average Steps Over 5-min Interval", xlab="Interval (5 min)", ylab="Average Steps")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
